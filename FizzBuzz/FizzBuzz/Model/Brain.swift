@@ -10,15 +10,15 @@ import Foundation
 
 class Brain {
     
-    func check(number: Int) -> String {
+    func check(number: Int) -> Move {
         if isDivisibleByFifteen(number: number) {
-            return "FizzBuzz"
+            return Move.fizzBuzz
         } else if isDivisibleByThree(number: number) {
-            return "Fizz"
+            return Move.fizz
         } else if isDivisibleByFive(number: number) {
-            return "Buzz"
+            return Move.buzz
         } else {
-            return "\(number)"
+            return Move.number
         }
     }
     

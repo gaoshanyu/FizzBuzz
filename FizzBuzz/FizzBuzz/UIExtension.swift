@@ -106,14 +106,14 @@ public extension UIImage {
     /// - Returns: image data
     public func imageRepresentationWithByteSize(byte: Int) -> Data? {
         
-        guard var imageData = UIImageJPEGRepresentation(self, 1.0) else {
+        guard var imageData = self.jpegData(compressionQuality: 1.0) else {
             return nil
         }
         
         var i: Double = 5
         while imageData.count > byte && i > 0 {
             i -= 1
-            imageData = UIImageJPEGRepresentation(self, CGFloat(0.2*(i)))!
+            imageData = self.jpegData(compressionQuality: CGFloat(0.2*(i)))!
         }
         
         return imageData
@@ -376,7 +376,7 @@ public extension UIViewController {
     
     func showNotifyAlert(title: String?, message: String?, completion: (() -> Swift.Void)? = nil) {
         
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert )
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert )
         
         let yesAction = UIAlertAction(title: "确认", style: .default) { (action) in
             completion?()
@@ -389,7 +389,7 @@ public extension UIViewController {
     
     func showConfirmModel(title: String?, message: String?, okTitle: String = "确认", noTitle: String = "取消", completion: @escaping (_ isOK: Bool) -> ()) {
         
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert )
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert )
         
         let yesAction = UIAlertAction(title: okTitle, style: .default) { (action) in
             completion(true)
@@ -433,7 +433,7 @@ public extension UIViewController {
             indexFinal = index!
             
         } else {
-            let index3 = tabBarController.viewControllers?.index(of: self)
+            let index3 = tabBarController.viewControllers?.firstIndex(of: self)
             if index3 == nil {
                 return;
             } else {
@@ -510,7 +510,7 @@ extension UITextField {
         self.text = ""
     }
     
-    func leftViewWithImage(_ image: UIImage, contentMode: UIViewContentMode = .center, offset: CGFloat = 12) {
+    func leftViewWithImage(_ image: UIImage, contentMode: UIView.ContentMode = .center, offset: CGFloat = 12) {
         let leftView = UIImageView(image: image)
         if let size = leftView.image?.size {
             leftView.frame = CGRect(x: 0, y: 0, width: size.width + offset * 2, height: size.height)
